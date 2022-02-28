@@ -40,10 +40,10 @@ trait ManagesUniversal
                 throw new ErrorException($item[0].' invalid address');
             }
 
-            array_push($this->attribute['balances'], [
-                'address'   =>  $item[0],
-                'balance'   =>  $this->getBalance($item[0], $item[1])
-            ]);
+            $this->attribute['balances'][] = [
+                'address' => $item[0],
+                'balance' => $this->getBalance($item[0], $item[1])
+            ];
         }
 
         return $this->attribute['balances'];
@@ -52,14 +52,14 @@ trait ManagesUniversal
     /**
      * We send funds to several addresses at once.
      *
-     * @param string $from
      * @param array $to
+     * @param string $from
      * @param null $private_key
      * @param bool $isValid
      * @return array
      * @throws ErrorException
      */
-    public function sendOneToMany(array $to, $private_key = null, $isValid = false, string $from): array
+    public function sendOneToMany(array $to, string $from, $private_key = null, bool $isValid = false): array
     {
         if(!is_null($private_key)) {
             $this->privateKey = $private_key;
@@ -75,9 +75,7 @@ trait ManagesUniversal
                 throw new ErrorException($item[0].' invalid address');
             }
 
-            array_push($this->attribute['one_to_many'],
-                $this->send($item[0], $item[1], $from)
-            );
+            $this->attribute['one_to_many'][] = $this->send($item[0], $item[1], $from);
         }
 
         return $this->attribute['one_to_many'];

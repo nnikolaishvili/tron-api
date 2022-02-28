@@ -140,7 +140,7 @@ class Tron implements TronInterface
      * @param HttpProviderInterface|null $eventServer
      * @param HttpProviderInterface|null $signServer
      * @param string|null $privateKey
-     * @return static
+     * @return Tron
      * @throws TronException
      */
     public static function make(?HttpProviderInterface $fullNode = null,
@@ -148,7 +148,7 @@ class Tron implements TronInterface
                                 ?HttpProviderInterface $eventServer = null,
                                 ?HttpProviderInterface $signServer = null,
                                 string $privateKey = null) {
-        return new static($fullNode, $solidityNode, $eventServer, $signServer, $privateKey);
+        return new self($fullNode, $solidityNode, $eventServer, $signServer, $privateKey);
     }
 
     /**
@@ -961,7 +961,7 @@ class Tron implements TronInterface
             $owner_address = $this->address['hex'];
         }
 
-        $freeze = $this->transactionBuilder->freezeBalance($amount, $duration, $resource, $owner_address);
+        $freeze = $this->transactionBuilder->freezeBalance($owner_address, $amount, $duration, $resource);
         $signedTransaction = $this->signTransaction($freeze);
         $response = $this->sendRawTransaction($signedTransaction);
 
@@ -983,7 +983,7 @@ class Tron implements TronInterface
             $owner_address = $this->address['hex'];
         }
 
-        $unfreeze = $this->transactionBuilder->unfreezeBalance($resource, $owner_address);
+        $unfreeze = $this->transactionBuilder->unfreezeBalance($owner_address, $resource);
         $signedTransaction = $this->signTransaction($unfreeze);
         $response = $this->sendRawTransaction($signedTransaction);
 
@@ -1031,7 +1031,7 @@ class Tron implements TronInterface
             $owner_address = $this->address['hex'];
         }
 
-        $withdraw = $this->transactionBuilder->updateToken($description, $url, $freeBandwidth, $freeBandwidthLimit, $owner_address);
+        $withdraw = $this->transactionBuilder->updateToken($description, $url, $owner_address, $freeBandwidth, $freeBandwidthLimit);
         $signedTransaction = $this->signTransaction($withdraw);
         $response = $this->sendRawTransaction($signedTransaction);
 
