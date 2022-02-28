@@ -24,8 +24,8 @@
         "ext-json": "*",
         "guzzlehttp/guzzle": "^7.0",
         "kornrunner/secp256k1": "^0.1.2",
-        "nnikolaishvili/data-types": "^2.0",
-        "nnikolaishvili/web3.php": "^2.0",
+        "nnikolaishvili/data-types": "^2.1",
+        "nnikolaishvili/web3.php": "^2.1",
         "simplito/elliptic-php": "^1.0"
     },
 
